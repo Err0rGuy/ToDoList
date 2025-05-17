@@ -1,0 +1,87 @@
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #0f2027, #2c5364, #00bf8f);
+    color: white;
+    overflow: hidden;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* NAVBAR STYLE */
+.navbar {
+    backdrop-filter: blur(10px);
+    background-color: rgba(0, 0, 0, 0.25) !important;
+    animation: fadeSlideDown 1s ease-out;
+}
+
+.navbar-brand {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2.5rem;
+    color: #fff;
+}
+
+.navbar .btn {
+    opacity: 0.6;
+    transition: 0.3s ease;
+}
+
+.navbar .btn:hover {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+/* WELCOME BOX STYLE */
+.welcome-box {
+    text-align: center;
+    padding: 50px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(8px);
+    animation: fadeSlideUp 1.2s ease-out;
+}
+
+.btn-custom {
+    margin: 10px;
+    min-width: 140px;
+    transition: all 0.3s ease;
+}
+
+.btn-custom:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(0, 255, 150, 0.3);
+}
+
+.content-wrapper {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ANIMATIONS */
+@keyframes fadeSlideUp {
+    0% {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeSlideDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
