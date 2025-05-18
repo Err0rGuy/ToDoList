@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use function Laravel\Prompts\alert;
 
 class TaskController extends Controller
 {
@@ -13,14 +14,17 @@ class TaskController extends Controller
      */
     public function index(Request $request)
     {
-        $filter = $request->filter;
+        $query = Task::query();
+        $filter = $request->get('filter');
+        $sort_by = $request->get('sort_by', 'created_at');
+        $order = $request->get('order', 'desc');
         if ($filter === 'done')
-            $tasks = Task::completed(true)->paginate(10)->appends(request()->query());
+            $query->completed(true);
         elseif($filter === 'undone')
-            $tasks = Task::completed(false)->paginate(10)->appends(request()->query());
-        else
-            $tasks = Task::query()->latest()->paginate(10);
-        return view('dashboard', compact('tasks'));
+            $query->completed(false);
+        $tasks = $query->orderBy($sort_by, $order)->simplePaginate(10)->appends($request->query());
+        $count = $query->count();
+        return view('dashboard', compact(['tasks', 'count']));
     }
 
     /**
@@ -36,11 +40,11 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'title' => 'required|string|max:50|unique:tasks',
             'description' => 'nullable|string'
         ]);
-        Task::query()->create($request->all());
+        Task::query()->create($validated);
 
         return redirect()->route('dashboard')->with('success', "Task Created Successfully!");
     }
